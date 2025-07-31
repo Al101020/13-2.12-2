@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>лекция: Workers</title>
+  </head>
+  <body>
+    
+    <h1>1. Postmessages!</h1><div>2025.07.31</div><h4>12. Лекции: Postmessages, WebWorkers, ServiceWorkers.</h4>
+    <iframe class="iframe" src="http://localhost:8081/"></iframe>
+    <!-- <pre class="messages"></pre> -->
+    <div class="messages"></div>
+    <script>
+      const iframe = document.querySelector('.iframe');
+      const iframeWindow = iframe.contentWindow.window;
+      const messages = document.querySelector('.messages');
+// console.log(messages);
+      const sendMessage = (message) => {
+        iframeWindow.postMessage(message, 'http://localhost:8081/');
+      };
+
+      iframe.addEventListener('load', () => {
+        sendMessage('start message');
+
+        window.addEventListener('message', (event) => {
+          messages.textContent += event.data + '\n';
+          
+          setTimeout(() => {
+            sendMessage(Math.round(Math.random() * 1000));
+          }, 1000);
+        });
+      });
+    </script>
+    
+    <h1>2. Web Workers!</h1>
+    <button class="slow-button">Тормоз-кнопка</button>
+    <button class="console-button">Консоль-кнопка</button>
+    <script>
+      const slowButton = document.querySelector('.slow-button');
+      const consoleButton = document.querySelector('.console-button');
+
+      slowButton.addEventListener('click', () => {
+        console.log('start');
+        let z;
+        for (let i = 0; i < 100000000000; i += 1) {
+          z = i * 2;
+        }
+        console.log(z);
+      });
+       consoleButton.addEventListener('click', () => {
+        console.log('клик console-кнопка');
+       });
+
+      
+    </script>
+
+  </body>
+</html>
