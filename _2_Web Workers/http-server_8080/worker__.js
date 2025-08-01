@@ -1,5 +1,5 @@
 // console.log('worker started !!!');
-console.log('------------------ worker ---------------------');
+console.log('----!-------------- worker ----------!-----------');
 
 // self.addEventListener('message', (event) => { // lint - ошибку выдавал 
 this.addEventListener('message', (event) => {

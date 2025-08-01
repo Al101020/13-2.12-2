@@ -7,10 +7,10 @@ npm install -g http-server.
 
 После установки перейти в директорию с проектом.
 Выполнить команду для запуска сервера:
-http-server -p 8800
+http-server -p 8080
 
 	Вставил из проекта 13-2.12 файл index.html в эту же папка и запустил сервер командой:
-http-server -p 8800
+http-server -p 8080
 
 В браузере открылась страница по адресу http://localhost:8000/, но без CSS.
 В <head> вставил строку <link rel="stylesheet" href="css/style.css">.

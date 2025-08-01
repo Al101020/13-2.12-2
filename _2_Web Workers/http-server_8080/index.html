@@ -10,7 +10,7 @@
   <body>
     <h4>12. Лекции: Postmessages, WebWorkers, ServiceWorkers.</h4>
     
-    <h2>2.1 Web Workers(чтение файлов - картинки)</h2>
+    <h2>2.1 Web Workers(чтение файлов - картинки!)</h2>
     <input type="file" class="file-input"/>
     <div>-----------------------</div>
     <img class="img-preview"/>
@@ -20,7 +20,8 @@
     <button class="slow-button">Тормоз-кнопка</button>
     <button class="console-button">Консоль-кнопка</button>
     <script type="module">
-      const worker = new Worker('./worker.js');
+      const worker = new Worker('./js/worker.js');
+      
 
       const slowButton = document.querySelector('.slow-button');
       const consoleButton = document.querySelector('.console-button');
@@ -36,7 +37,12 @@
 
       consoleButton.addEventListener('click', () => {
         console.log('click console-button');
+
+        worker.postMessage('test message');
+        worker.terminate();
       })
+
+
     </script>
 
   </body>
