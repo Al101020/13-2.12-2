@@ -1,0 +1,4 @@
+npm install -g http-server
+
+	запуск:
+http-server -p 8080
