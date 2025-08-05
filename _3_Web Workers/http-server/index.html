@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href="css/style.css">
+    <title>лекция: Workers</title>
+  </head>
+  <body>
+    <h4>12. Лекции: Postmessages, WebWorkers, ServiceWorkers.</h4>
+    
+    <h2>2.1 Web Workers</h2>
+    <img class="img-preview"/><br>
+    <input type="file" class="file-input"/><br><br>
+    <button class="slow-button">Тормоз-кнопка</button>
+    <button class="console-button">Консоль-кнопка</button>
+
+    <br>
+    <pre class="text-preview"></pre>
+    
+    <script type="module">
+      const worker = new Worker('./worker.js');
+
+      const imagePreview = document.querySelector('.img-preview');
+      const textPreview = document.querySelector('.text-preview');
+      const slowButton = document.querySelector('.slow-button');
+      const consoleButton = document.querySelector('.console-button');
+      const fileInput = document.querySelector('.file-input');
+
+
+      slowButton.addEventListener('click', async() => {
+        console.log('start');
+
+        worker.postMessage('calculate');
+      })
+
+      consoleButton.addEventListener('click', () => {
+        console.log('click console-button');
+        // worker.postMessage('test message');
+        // worker.terminate(); // каманда отстанавливает worker
+      })
+
+      // worker.onmessage = (event) => { console.log(event.data)}; // тоже работает
+      worker.addEventListener('message', (event) => {
+        // console.log(event.data);
+        // imagePreview.src = event.data; // для картинки
+        textPreview.textContent = event.data; // для текста
+      });
+
+      // fileInput.addEventListener('change', (event) => { // сработало также, как и событи input
+      //   const target = event.target;
+
+      //   const userFile = target.files && target.files[0];
+
+      //   console.log(userFile);
+      // });
+
+      fileInput.addEventListener('input', (event) => {
+        const target = event.target;
+
+        const userFile = target.files && target.files[0];
+
+        // console.log(userFile);
+        worker.postMessage(userFile);
+      });
+    </script>
+
+  </body>
+</html>

@@ -1,0 +1,19 @@
+// console.log('worker started !!!');
+console.log('------------------ worker ---------------------');
+
+self.addEventListener('message', (event) => {
+  console.log('worker recieved a message: ');
+  
+  console.log(event.data);
+
+  const reader = new FileReader();
+
+  reader.addEventListener('load', (event) => {
+    const content = event.target.result;
+
+    self.postMessage(content);
+  });
+
+  // reader.readAsDataURL(event.data); // для картинки
+  reader.readAsText(event.data);
+});
