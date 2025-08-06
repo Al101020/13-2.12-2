@@ -23,8 +23,18 @@ http://localhost:8080/node_modules/jszip/dist/jszip.js
 http://localhost:8080/node_modules/jszip/dist/jszip.min.js
 
 
+
 2025.08.06
-создал каталог: _4_Service Workers, 
+создал каталог: _4_Service Workers, т.к. начал изучать видео 4. Service Workers
+/node_modules/
+
+
+
+
+
+
+
+
 
 
 
