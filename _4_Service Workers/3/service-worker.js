@@ -1,0 +1,59 @@
+self.addEventListener('install', (event) => {
+  console.log('Установлен');
+
+  event.waitUntil(
+    caches.open('my-best-cache')
+      .then((cache) => {
+        cache.addAll([
+        // cache.addAll([
+          './',
+          './index.html',
+          './node_modules/mini.css/dist/mini-default.min.css',
+          './style.css',
+          'http://localhost:8080/netology2.png',
+        ])
+      })
+  )
+});
+
+self.addEventListener('activate', (event) => {
+  console.log('Активирован');
+});
+
+
+// caches.match(event.request).then((response) => {
+//   return response || fetch(event.response).then((response) => {
+//     return caches.open('my-best-cache').then((cache) => {
+//       cache.put(event.request, response.clone());
+
+//       return respons:
+//     })
+//   });
+// })
+
+async function cachePriorityThenFetch(event) {
+  const cacheResponse = await caches.match(event.request);
+
+  if (cacheResponse) {
+    return cacheResponse;
+  }
+
+  let response;
+
+  try {
+    response = await fetch(event.request);
+  } catch (error) {
+    return;
+  }
+
+  const cache = await caches.open('my-best-cache');
+
+  cache.put(event.request, response.clone());
+
+  return response;
+}
+
+self.addEventListener('fetch', (event) => {
+  console.log('Происходит запрос на сервер');
+  event.respondWith(cachePriorityThenFetch(event));
+});
