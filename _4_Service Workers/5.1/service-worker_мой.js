@@ -2,7 +2,7 @@ const FETCH_PRIORITY_URLS = ['/', '/index.html', '/style.css'];
 
 self.addEventListener('install', (event) => {
   console.log('Установлен');
-  
+
   event.waitUntil(
     caches.open('my-best-cache')
       .then((cache) => {
@@ -11,7 +11,7 @@ self.addEventListener('install', (event) => {
           './index.html',
           './node_modules/mini.css/dist/mini-default.min.css',
           './style.css',
-          './image/fallback/user.jpg'
+          'http://localhost:8080/images/fallback/netology2.png', // 'http://localhost:8080/netology2.png',
         ])
       })
   )
@@ -22,7 +22,7 @@ self.addEventListener('activate', (event) => {
 });
 
 async function cachePriorityThenFetch(event) {
-  const cacheResponse = await caches.match(event.request)
+  const cacheResponse = await caches.match(event.request);
 
   if (cacheResponse) {
     return cacheResponse;
@@ -49,15 +49,15 @@ async function fetchPriorityThenCache(event) {
   try {
     response = await fetch(event.request);
   } catch (error) {
-    const cacheResponse = await caches.match(event.request)
-    
+    const cacheResponse = await caches.match(event.request);
+
     if (cacheResponse) {
       return cacheResponse;
     }
 
-    return new Response('Нет соединения');
+    return;
   }
-
+  
   const cache = await caches.open('my-best-cache');
 
   cache.put(event.request, response.clone());
@@ -72,14 +72,14 @@ async function fetchPriorityThenCacheThenImageFallback(event) {
     response = await fetch(event.request);
   } catch (error) {
     const cacheResponse = await caches.match(event.request);
-    
+
     if (cacheResponse) {
       return cacheResponse;
     }
 
-    return await caches.match('./image/fallback/user.jpg');
+    return await cache.match('./images/fallback/netology2.png');
   }
-
+  
   const cache = await caches.open('my-best-cache');
 
   cache.put(event.request, response.clone());
@@ -87,22 +87,23 @@ async function fetchPriorityThenCacheThenImageFallback(event) {
   return response;
 }
 
+
 self.addEventListener('fetch', (event) => {
   console.log('Происходит запрос на сервер');
-  
+
   const url = new URL(event.request.url);
-  
+
   if (FETCH_PRIORITY_URLS.includes(url.pathname)) {
     event.respondWith(fetchPriorityThenCache(event));
-    
+
     return;
   }
-  
+
   if (url.pathname.startsWith('/images/user')) {
     event.respondWith(fetchPriorityThenCacheThenImageFallback(event));
-    
+
     return;
   }
-  
-  event.respodWith(cachePriorityThenFetch(event));
+
+  event.respondWith(cachePriorityThenFetch(event));
 });

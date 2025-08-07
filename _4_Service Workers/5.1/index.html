@@ -1,30 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="./node_modules/mini.css/dist/mini-default.min.css">
     <link rel="stylesheet" href="./style.css">
-    <title>лекция: Server Workers</title>
-  </head>
-  <body>
-    <h4>12. Лекции: Postmessages, WebWorkers, ServiceWorkers.</h4>
-    
-    <h1>Сервис воркеры(Workers)</h1>
-    <h2>dusty</h2>
+</head>
 
-    <!-- <img class="user-image" src="./imeges/user/netology.png"/><br> -->
-    <img class="user-image" src="./images/user/netology.png"/><br>
-
-    <script>
-      if ('serviceWorker' in navigator) { 
-        navigator.serviceWorker.register('./service-worker.js', { scope: './' })
-          .then((reg) => {
-            // регистрация сработала
-            console.log('Registration succeeded. Scope is ' + reg.scope);
-          }).catch((error) => {
-            // регистрация прошла неудачно
-            console.log('Registration failed with ' + error);
-          });
+<body>
+	<h1>Сервис воркеры</h1>
+	<h2>Профиль dusty</h2>
+	<img class="user-image" src="./images/user/dusty.dfh4sf45.jpg">
+	<script>
+	
+	  if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('./service-worker.js', {scope: './'})
+        .then((reg) => {
+          // регистрация сработала
+          console.log('Registration succeeded. Scope is ' + reg.scope);
+        }).catch((error) => {
+          // регистрация прошла неудачно
+          console.log('Registration failed with ' + error);
+        });
       }
-    </script>
-  </body>
+
+	</script>
+</body>
+
 </html>
