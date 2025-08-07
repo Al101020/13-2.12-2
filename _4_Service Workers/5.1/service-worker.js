@@ -11,7 +11,7 @@ self.addEventListener('install', (event) => {
           './index.html',
           './node_modules/mini.css/dist/mini-default.min.css',
           './style.css',
-          './image/fallback/user.jpg'
+          './images/fallback/user.jpg'
         ])
       })
   )
@@ -77,7 +77,8 @@ async function fetchPriorityThenCacheThenImageFallback(event) {
       return cacheResponse;
     }
 
-    return await caches.match('./image/fallback/user.jpg');
+    // return await caches.match('./images/fallback/фигушки.png');
+    return await caches.match('./images/fallback/user.jpg');
   }
 
   const cache = await caches.open('my-best-cache');
